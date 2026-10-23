@@ -1,0 +1,44 @@
+# Gate G1 (QA plan 4.1): runs on every local commit. It can be skipped, so CI repeats all of it.
+# Install once with: make setup   (runs pre-commit install)
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-added-large-files
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.17.2
+    hooks:
+      - id: ruff-check
+        args: [--fix]
+      - id: ruff-format
+
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.1
+    hooks:
+      - id: gitleaks
+
+  - repo: local
+    hooks:
+      - id: clang-format
+        name: clang-format (C++)
+        entry: clang-format --dry-run --Werror
+        language: system
+        files: ^cpp/.*\.(cpp|hpp)$
+      - id: eslint
+        name: ESLint (front end)
+        entry: npm --prefix frontend run lint
+        language: system
+        files: ^frontend/
+        pass_filenames: false
+      - id: prettier
+        name: Prettier (front end)
+        entry: npm --prefix frontend run format:check
+        language: system
+        files: ^frontend/
+        pass_filenames: false

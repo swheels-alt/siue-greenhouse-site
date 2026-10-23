@@ -1,0 +1,19 @@
+# Three code owners per protected path, so an author who is an owner still has two others who can
+# approve, and one person being away never blocks a merge (QA plan 3.4). Protected paths also need
+# 2 approvals, which the protected-paths check counts.
+# Before turning on "Require review from Code Owners", replace each @handle below with the
+# person's real GitHub username (docs/REPO_SETTINGS.md, step 3; docs/DEBT.md).
+#
+#   @sam-wheeler-gh    Sam Wheeler     (QA lead, sponsor liaison)
+#   @dane-niblett-gh   Dane Niblett    (CI, infrastructure, security)
+#   @matthew-wilson-gh Matthew Wilson  (accessibility, UI quality)
+#   @yahir-romero-gh   Yahir Romero    (documentation, handoff)
+
+/backend/app/auth/             @dane-niblett-gh @sam-wheeler-gh @matthew-wilson-gh
+/backend/app/reservations/     @sam-wheeler-gh @matthew-wilson-gh @dane-niblett-gh
+/backend/migrations/           @dane-niblett-gh @yahir-romero-gh @sam-wheeler-gh
+/.github/workflows/            @dane-niblett-gh @sam-wheeler-gh @yahir-romero-gh
+/.github/rulesets/             @dane-niblett-gh @sam-wheeler-gh @yahir-romero-gh
+/.github/CODEOWNERS            @dane-niblett-gh @sam-wheeler-gh @yahir-romero-gh
+/docs/QA_PLAN.md               @sam-wheeler-gh @yahir-romero-gh @matthew-wilson-gh
+/docs/DEFINITION_OF_DONE.md    @sam-wheeler-gh @yahir-romero-gh @matthew-wilson-gh

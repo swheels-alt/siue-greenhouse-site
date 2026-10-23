@@ -1,0 +1,38 @@
+# Scheduled checks (QA plan 4.1): the full CI suite on main every night, so new vulnerabilities in
+# unchanged dependencies (M15) and flaky tests (M12) show up without waiting for a PR. The build
+# cop opens an issue for any red nightly run.
+name: nightly
+
+on:
+  schedule:
+    - cron: "17 8 * * *" # 08:17 UTC, early morning in Edwardsville
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    uses: ./.github/workflows/ci.yml
+
+  # In CI the audits block only PRs that change dependencies. Here they fail the nightly run on
+  # any known advisory, so a new advisory in a package we already use is seen the next morning
+  # and its M15 clock starts (Critical fixed within 2 days, High within 7).
+  dependency-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version-file: .python-version
+      - run: pip install pip-audit==2.10.1 # same pin as backend/requirements.lock
+      - name: Python dependency audit (M15)
+        run: pip-audit -r backend/requirements.lock
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+      - name: JavaScript dependency audit (M15)
+        run: |
+          npm audit --prefix frontend --audit-level=high
+          npm audit --prefix e2e --audit-level=high

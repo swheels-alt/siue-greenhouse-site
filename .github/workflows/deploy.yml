@@ -1,0 +1,27 @@
+# Gate G4 (QA plan 4.1) does not exist yet. Until ADR 0002 picks the hosting and a test server with
+# SIUE ITS (D2), a merge to main does not deploy anywhere: this workflow only prints that notice.
+# When ADR 0002 is accepted, this job deploys each merge to staging and runs the browser flows
+# against it (docs/DEBT.md, owner Dane Niblett).
+name: deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-staging
+  cancel-in-progress: false
+
+jobs:
+  staging:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: No deploy target yet
+        run: |
+          echo "Merges do not deploy yet: staging waits on ADR 0002 (D2) with SIUE ITS."
+          echo "See docs/DEBT.md. The CI checks on the PR are the last automated gate until then."

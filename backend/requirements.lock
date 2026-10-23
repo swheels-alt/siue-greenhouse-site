@@ -1,0 +1,17 @@
+# Pinned Python development and QA tools for the SIUE Greenhouse Website.
+# Changed only through Dependabot PRs or reviewed PRs that pass CI (QA plan 6.2).
+# Web framework and runtime packages are added here when ADR 0001 (D1) is accepted.
+diff-cover==10.6.0
+gcovr==8.7
+lizard==1.24.2
+mutmut==3.8.0
+mypy==2.4.0
+pip-audit==2.10.1
+pre-commit==4.7.0
+PyMySQL==1.2.3
+pytest==9.1.1
+pytest-cov==7.1.0
+PyYAML==6.0.3
+radon==6.0.1
+ruff==0.17.2
+types-PyYAML==6.0.12.20260906

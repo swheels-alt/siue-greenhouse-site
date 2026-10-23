@@ -1,0 +1,10 @@
+# Secret scanning (QA plan 3.1). Uses gitleaks' default rules; the allowlist covers only the
+# obviously fake local and CI passwords in .env.example, docker-compose.yml and ci.yml.
+title = "SIUE Greenhouse gitleaks config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Fake development and CI passwords, not real secrets"
+regexes = ['''_dev_only''', '''ci_only_''']

@@ -1,0 +1,6 @@
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.pdf binary
+frontend/package-lock.json linguist-generated=true
+e2e/package-lock.json linguist-generated=true

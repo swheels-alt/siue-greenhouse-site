@@ -1,0 +1,12 @@
+{
+  "extends": ["stylelint-config-standard"],
+  "rules": {
+    "color-no-hex": true
+  },
+  "overrides": [
+    {
+      "files": ["src/styles/theme.css"],
+      "rules": { "color-no-hex": null }
+    }
+  ]
+}

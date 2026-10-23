@@ -1,0 +1,28 @@
+name: Feature or task
+description: New work for the board (QA plan 4.3)
+labels: ["feature"]
+body:
+  - type: textarea
+    id: story
+    attributes:
+      label: Who needs this and why
+      placeholder: "As faculty, I want to see which tables are open so I can request one."
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria (Given / When / Then)
+      description: Each criterion maps to at least one automated test. Required before Ready.
+      placeholder: |
+        Given a logged-in faculty member
+        When they pick a start time after the end time
+        Then the form shows "End time must be after start time" and does not submit
+    validations:
+      required: true
+  - type: checkboxes
+    id: design
+    attributes:
+      label: Needs a design review first? (QA plan 4.5)
+      options:
+        - label: Adds a table, an external integration, a runtime dependency, or changes login or access rules

@@ -1,0 +1,19 @@
+[
+  {"number": 1, "state": "OPEN", "createdAt": "2026-10-23T12:00:00Z", "closedAt": null,
+   "labels": [{"name": "bug"}, {"name": "severity:S2"}, {"name": "priority:P1"}], "milestone": null},
+  {"number": 2, "state": "OPEN", "createdAt": "2026-10-23T12:00:00Z", "closedAt": null,
+   "labels": [{"name": "bug"}, {"name": "severity:S3"}, {"name": "priority:P3"}, {"name": "deferred"}], "milestone": null},
+  {"number": 20, "state": "OPEN", "createdAt": "2026-10-10T12:00:00Z", "closedAt": null,
+   "labels": [{"name": "bug"}, {"name": "severity:S1"}, {"name": "priority:P1"}, {"name": "escaped"}], "milestone": null},
+  {"number": 21, "state": "OPEN", "createdAt": "2026-10-01T12:00:00Z", "closedAt": null,
+   "labels": [{"name": "bug"}, {"name": "severity:S3"}, {"name": "priority:P2"}],
+   "milestone": {"title": "v0.2.0", "dueOn": "2026-10-15T00:00:00Z"}},
+  {"number": 22, "state": "CLOSED", "createdAt": "2026-10-02T12:00:00Z", "closedAt": "2026-10-03T12:00:00Z",
+   "labels": [{"name": "bug"}, {"name": "severity:S2"}, {"name": "escaped"}], "milestone": null},
+  {"number": 23, "state": "OPEN", "createdAt": "2026-10-01T12:00:00Z", "closedAt": null,
+   "labels": [{"name": "flaky"}], "milestone": null},
+  {"number": 24, "state": "OPEN", "createdAt": "2026-10-21T12:00:00Z", "closedAt": null,
+   "labels": [{"name": "flaky"}], "milestone": null},
+  {"number": 25, "state": "OPEN", "createdAt": "2026-09-01T12:00:00Z", "closedAt": null,
+   "labels": [{"name": "bug"}, {"name": "severity:S4"}, {"name": "escaped"}], "milestone": null}
+]

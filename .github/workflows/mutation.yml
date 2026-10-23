@@ -1,0 +1,42 @@
+# Monthly mutation testing (QA plan 3.3): checks whether the Python tests would notice a broken
+# line of backend/app. Reported only, never a required check. Each surviving mutant gets an action
+# in the monthly QA report: a new test, or a written reason it does not need one (QA plan 7.3).
+# Surviving mutants never fail the run; mutmut exits non-zero only when it cannot run the tests.
+name: mutation
+
+on:
+  schedule:
+    - cron: "23 9 1 * *" # 09:23 UTC on the first day of each month
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  mutmut:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version-file: .python-version
+          cache: pip
+          cache-dependency-path: backend/requirements.lock
+      - run: pip install -r backend/requirements.lock
+      - name: Run mutation testing (mutmut)
+        working-directory: backend
+        run: mutmut run
+      - name: Results to the job summary
+        if: always()
+        working-directory: backend
+        run: |
+          {
+            echo "### Mutation testing (reported only)"
+            echo '```'
+            mutmut results --all true | awk '{print $NF}' | sort | uniq -c
+            echo
+            echo "Surviving mutants:"
+            mutmut results
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

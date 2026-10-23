@@ -1,0 +1,24 @@
+/*
+ * The only file allowed to hold color values (QA plan 3.1, Stylelint color-no-hex).
+ * Placeholder values: Matthew replaces them with the SIUE brand colors and fonts
+ * confirmed by Marketing and Communications.
+ */
+:root {
+  --color-text: #1a1a1a;
+  --color-background: #fff;
+  --color-accent: #8a1c1c;
+  --font-body: system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+  color: var(--color-text);
+  background: var(--color-background);
+  font-family: var(--font-body);
+}
+
+.page {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+}

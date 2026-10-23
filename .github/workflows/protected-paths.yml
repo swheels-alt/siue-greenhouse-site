@@ -1,0 +1,83 @@
+# QA plan 3.4: changes to protected paths need 2 approvals from people other than the author.
+# GitHub's own setting is per branch, so this check counts approvals itself. It is a required
+# status check, so a protected-path PR with fewer than 2 approvals cannot merge.
+# QA plan 10.2: a change to the plan or the Definition of Done also needs one approval from the
+# QA lead or the QA lead's backup, other than the author, so it works while either is away. The two GitHub usernames
+# are the repository variables QA_LEAD and QA_LEAD_BACKUP (docs/REPO_SETTINGS.md, step 9).
+name: protected-paths
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  pull_request_review:
+    types: [submitted, dismissed]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  protected-paths:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/github-script@v9
+        env:
+          QA_LEAD: ${{ vars.QA_LEAD }}
+          QA_LEAD_BACKUP: ${{ vars.QA_LEAD_BACKUP }}
+        with:
+          script: |
+            const protectedPrefixes = [
+              "backend/app/auth/",
+              "backend/app/reservations/",
+              "backend/migrations/",
+              ".github/workflows/",
+              ".github/rulesets/",
+              ".github/CODEOWNERS",
+              "docs/QA_PLAN.md",
+              "docs/DEFINITION_OF_DONE.md",
+            ];
+            const qaLeadPaths = ["docs/QA_PLAN.md", "docs/DEFINITION_OF_DONE.md"];
+            const pr = context.payload.pull_request;
+            const files = await github.paginate(github.rest.pulls.listFiles, {
+              owner: context.repo.owner, repo: context.repo.repo, pull_number: pr.number,
+            });
+            const names = files.map((f) => f.filename);
+            const touched = names.filter((name) => protectedPrefixes.some((p) => name.startsWith(p)));
+            if (touched.length === 0) {
+              core.info("No protected paths changed; the normal 1-approval rule applies.");
+              return;
+            }
+            const reviews = await github.paginate(github.rest.pulls.listReviews, {
+              owner: context.repo.owner, repo: context.repo.repo, pull_number: pr.number,
+            });
+            const latest = new Map();
+            for (const review of reviews) {
+              if (review.user.login !== pr.user.login && review.state !== "COMMENTED") {
+                latest.set(review.user.login, review.state);
+              }
+            }
+            const approvers = [...latest].filter(([, state]) => state === "APPROVED").map(([login]) => login);
+            core.info(`Protected paths changed: ${touched.join(", ")}`);
+            core.info(`Approvals from others: ${approvers.join(", ") || "none"}`);
+            const problems = [];
+            if (approvers.length < 2) {
+              problems.push(`Protected paths need 2 approvals; this PR has ${approvers.length}.`);
+            }
+            if (names.some((name) => qaLeadPaths.includes(name))) {
+              const lead = process.env.QA_LEAD;
+              const backup = process.env.QA_LEAD_BACKUP;
+              if (!lead || !backup) {
+                core.warning("QA_LEAD and QA_LEAD_BACKUP are not set, so the QA lead approval was not checked.");
+              } else {
+                // Either the QA lead or the backup may approve, never the author, so the rule
+                // still works while one of them is away.
+                const allowed = [lead, backup].filter((login) => login !== pr.user.login);
+                if (!allowed.some((login) => approvers.includes(login))) {
+                  problems.push(`A change to the QA plan or Definition of Done needs an approval from ${allowed.join(" or ")}.`);
+                }
+              }
+            }
+            if (problems.length > 0) {
+              core.setFailed(problems.join(" "));
+            }

@@ -1,0 +1,14 @@
+{
+  "name": "greenhouse-e2e",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "playwright test",
+    "lighthouse": "cd .. && npx --yes @lhci/cli@0.15.1 autorun --config=lighthouserc.json"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.64.1"
+  }
+}

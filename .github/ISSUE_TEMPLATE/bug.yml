@@ -1,0 +1,53 @@
+name: Bug report
+description: Something works differently from how it should (QA plan 8.3)
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Triage is a standing 15-minute slot (QA plan 8.3). Do not paste real names, emails or phone
+        numbers. Severity (how bad: S1 to S4) and priority (when we fix it: P1 to P3) are set at
+        triage, so you do not need to choose them. If it blocks you right now, say so in the
+        actual result and the triager will consider P1.
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Environment
+      options: [Local, Staging, Production]
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version and browser
+      placeholder: "staging v0.4.0, Firefox, Windows 11"
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Log in as faculty
+        2. Open Reservations, then New request
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result
+    validations:
+      required: true
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots (optional; crop out any personal data)
+    validations:
+      required: false

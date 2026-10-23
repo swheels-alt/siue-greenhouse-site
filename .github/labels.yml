@@ -1,0 +1,36 @@
+# Labels used by the QA process (QA plan 8.3). Create them once with the GitHub CLI
+# (docs/REPO_SETTINGS.md, step 4). Every accepted defect gets one severity and one priority label.
+# Severity is damage: how bad it is for users.
+- { name: "severity:S1", color: b60205, description: "Critical: data lost or altered, access control broken, site down, form cannot submit" }
+- { name: "severity:S2", color: d93f0b, description: "High: core flow broken with no workaround, or WCAG failure on a core flow; blocks release" }
+- { name: "severity:S3", color: fbca04, description: "Medium: broken with a workaround; non-core accessibility or visual problem" }
+- { name: "severity:S4", color: c5def5, description: "Low: cosmetic or wording" }
+# Priority is schedule: when we fix it. S1 is always P1; S2 is at least P2.
+- { name: "priority:P1", color: b60205, description: "Fix now, interrupts the sprint, within 2 days (M8)" }
+- { name: "priority:P2", color: d93f0b, description: "Fix in the current release (M8)" }
+- { name: "priority:P3", color: c5def5, description: "Backlog; fix when convenient, re-read monthly" }
+- { name: deferred, color: ededed, description: "Not fixing now; written reason and revisit trigger in the issue" }
+- { name: verifying, color: c5def5, description: "Fix merged; waiting for someone other than the fixer to verify (M8 clock stops)" }
+# Kind of work
+- { name: bug, color: d73a4a, description: "A confirmed difference from specified behavior" }
+- { name: feature, color: 0e8a16, description: "New work" }
+- { name: good first issue, color: 7057ff, description: "Real, small, finishable on day one by a new developer" }
+- { name: tech-debt, color: 006b75, description: "Debt to pay down; listed in docs/DEBT.md" }
+- { name: docs, color: 0075ca, description: "Documentation fix, often from a dry run" }
+- { name: tooling, color: 006b75, description: "Change to tools or their configuration" }
+- { name: dependencies, color: 0366d6, description: "Dependabot updates" }
+# Triage state
+- { name: needs-triage, color: fbca04, description: "Waiting for the next triage slot (QA plan 8.3)" }
+- { name: needs-info, color: fbca04, description: "Closed after 7 days without a reply" }
+- { name: regression, color: b60205, description: "Verification failed; reopened" }
+- { name: wontfix, color: ffffff, description: "S3 or S4 only, with QA lead approval" }
+# Measured by scripts/qa_report.py (QA plan Section 7)
+- { name: escaped, color: 5319e7, description: "Found after release, in production (M6)" }
+- { name: revert, color: 5319e7, description: "PR that reverts a merge to main (M3, M9)" }
+- { name: hotfix, color: 5319e7, description: "Unplanned fix shipped outside a release (M3, M5)" }
+- { name: flaky, color: e99695, description: "Fails then passes with no code change; quarantined same day (M12)" }
+# Process
+- { name: process, color: 1d76db, description: "Retro or metrics action item" }
+- { name: sponsor-feedback, color: 1d76db, description: "From a sponsor acceptance session" }
+- { name: onboarding, color: 0075ca, description: "New member setup log" }
+- { name: qa-plan, color: 006b75, description: "Change to docs/QA_PLAN.md" }

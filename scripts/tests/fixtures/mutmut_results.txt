@@ -1,0 +1,5 @@
+    app.auth.route_access.x_unclassified__mutmut_1: killed
+    app.auth.route_access.x_unclassified__mutmut_2: killed
+    app.auth.route_access.x_unclassified__mutmut_6: survived
+    app.health.x_health__mutmut_1: killed
+    app.health.x_health__mutmut_2: no tests

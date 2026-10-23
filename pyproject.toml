@@ -1,0 +1,59 @@
+[project]
+name = "greenhouse-site"
+version = "0.1.0"
+description = "SIUE Greenhouse Website, CS 425 senior project"
+requires-python = ">=3.12"
+
+# ---------------------------------------------------------------- ruff (QA plan 3.1)
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["backend", "scripts"]
+extend-exclude = ["frontend", "e2e", "cpp", "build"]
+
+[tool.ruff.lint]
+select = [
+  "E", "W", "F",   # pycodestyle and pyflakes (PEP 8)
+  "I",             # import order
+  "B",             # bugbear
+  "UP",            # modern syntax
+  "S",             # security, including S608 string-built SQL
+  "D",             # docstrings (3.2)
+  "C90",           # cyclomatic complexity 10 or less (M13)
+  "PLR0915",       # statements per function
+  "ERA001",        # commented-out code
+  "T20",           # print statements
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10
+
+[tool.ruff.lint.pylint]
+max-statements = 50
+
+[tool.ruff.lint.per-file-ignores]
+"backend/tests/**" = ["S101", "D"]
+"scripts/tests/**" = ["S101", "D"]
+"scripts/**" = ["T20", "S603", "S607"]
+
+# ---------------------------------------------------------------- mypy
+[tool.mypy]
+python_version = "3.12"
+strict = true
+files = ["backend/app"]
+mypy_path = "backend"
+
+# ---------------------------------------------------------------- pytest and coverage
+# Coverage is reported on every run and never gates a merge (QA plan 3.3 and 7.1).
+[tool.pytest.ini_options]
+testpaths = ["backend/tests", "scripts/tests"]
+pythonpath = ["backend", "backend/tests/unit", "scripts"]
+addopts = "--cov=app --cov-branch --cov-report=term-missing --cov-report=xml"
+markers = ["integration: needs the MySQL service (runs in CI)"]
+
+[tool.coverage.run]
+branch = true
+source = ["app"]

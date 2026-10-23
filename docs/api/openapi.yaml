@@ -1,0 +1,27 @@
+openapi: 3.1.0
+info:
+  title: SIUE Greenhouse API
+  version: 0.1.0
+  description: >
+    The contract between the front end and the server (QA plan 4.5). Every route here must also
+    be classified in backend/app/auth/route_access.py; a test fails if the two differ.
+paths:
+  /health:
+    get:
+      summary: Service health for SIUE ITS monitoring
+      security: []
+      responses:
+        "200":
+          description: The service is up
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status, version]
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  version:
+                    type: string
+                    example: 0.1.0

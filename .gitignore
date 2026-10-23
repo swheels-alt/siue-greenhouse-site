@@ -1,0 +1,27 @@
+# Environments and secrets
+.env
+.venv/
+__pycache__/
+*.pyc
+
+# Build and test output
+build/
+coverage.xml
+.coverage
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+frontend/node_modules/
+frontend/dist/
+frontend/coverage/
+e2e/node_modules/
+e2e/test-results/
+e2e/playwright-report/
+.lighthouseci/
+mutants/
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store

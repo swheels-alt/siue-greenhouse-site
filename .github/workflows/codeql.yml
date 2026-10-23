@@ -1,0 +1,46 @@
+# Code scanning for security findings (QA plan Q4, M15). Reported, not a required check.
+# CodeQL is free only on public repositories; on a private repository it needs GitHub Code
+# Security (Team or Enterprise plan). The job skips itself on a private repository, so it never
+# blocks or fails there. QA plan 6.1 recommends a public repository for this reason.
+name: codeql
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "41 9 * * 1"
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  analyze:
+    if: ${{ !github.event.repository.private }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: python
+            build-mode: none
+          - language: javascript-typescript
+            build-mode: none
+          - language: c-cpp
+            build-mode: manual
+    steps:
+      - uses: actions/checkout@v7
+      - uses: github/codeql-action/init@v4
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
+      - name: Build C++ for analysis
+        if: matrix.language == 'c-cpp'
+        run: |
+          cmake -S cpp -B build/cpp
+          cmake --build build/cpp -j
+      - uses: github/codeql-action/analyze@v4
+        with:
+          category: /language:${{ matrix.language }}
