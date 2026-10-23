@@ -11,12 +11,12 @@ log where and how long it cost in an issue labeled `onboarding`.
 | --- | --- | --- | --- |
 | Git | any recent | `sudo apt install git` | `xcode-select --install` |
 | make, g++, CMake | g++ with C++17, CMake 3.20+ | `sudo apt install build-essential cmake` | `xcode-select --install`, then `brew install cmake` |
-| clang-format, clang-tidy | any recent | `sudo apt install clang-format clang-tidy` | `brew install llvm` |
-| Python | 3.12 or newer (CI uses `.python-version`) | Ubuntu 24.04: `sudo apt install python3 python3-venv`. Ubuntu 22.04 ships 3.10, which is too old: `sudo add-apt-repository ppa:deadsnakes/ppa`, `sudo apt install python3.12 python3.12-venv`, then run `make setup PYTHON=python3.12` | `brew install python@3.12` |
-| Node.js | `.nvmrc` | install nvm, then `nvm install` | `brew install nvm`, then `nvm install` |
-| Docker Desktop | current | docker.com, with WSL2 integration on | docker.com |
+| clang-format, clang-tidy | any recent | `sudo apt install clang-format clang-tidy` | `brew install clang-format` (clang-tidy runs in CI; to run it locally, `brew install llvm` and add `$(brew --prefix llvm)/bin` to your PATH) |
+| Python | 3.12 or newer (CI uses `.python-version`) | Ubuntu 24.04: `sudo apt install python3 python3-venv`. Ubuntu 22.04 ships 3.10, which is too old: `sudo add-apt-repository ppa:deadsnakes/ppa`, `sudo apt install python3.12 python3.12-venv`, then run `make setup PYTHON=python3.12` | `brew install python@3.12`, then run `make setup PYTHON=python3.12` (the `python3` that ships with macOS is too old) |
+| Node.js | `.nvmrc` (24) | install nvm, then `nvm install` | the Node.js 24 LTS installer from nodejs.org |
+| Docker Desktop | current | docker.com, with WSL2 integration on | docker.com (pick Apple silicon or Intel to match your Mac); open it once before `make db-up` |
 
-On Windows, install WSL2 with Ubuntu first and run every command in the Ubuntu terminal.
+On Windows, install WSL2 with Ubuntu first and run every command in the Ubuntu terminal. On macOS, install Homebrew first (the one-line command on brew.sh), then run every command in Terminal.
 
 ## Steps
 

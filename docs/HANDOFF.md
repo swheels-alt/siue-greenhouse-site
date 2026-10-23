@@ -14,7 +14,7 @@ Filled in during the last 4 weeks of Spring 2027 (QA plan 9.7). Names only, neve
 
 ## Where things are
 
-- Repository URL:
+- Repository URL: https://github.com/swheels-alt/siue-greenhouse-site (moves to the department organization with D4)
 - Staging URL:
 - Production URL:
 - Walkthrough recordings (architecture, deploy, QA process):
