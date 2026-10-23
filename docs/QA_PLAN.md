@@ -279,7 +279,7 @@ flowchart TB
   g4 -.-> g5["G5 Release<br/>every 3 weeks in Spring 2027"]
 ```
 
-Solid boxes are configured now and run on every PR once the repository is on GitHub (D5); dashed boxes start when hosting is decided (D2). The time budgets are targets measured by M11; a stage that runs over its budget is a process issue for Dane.
+Solid boxes run on every PR and every push to main; the first run, on October 23, 2026, passed every job in about 2 minutes. Dashed boxes start when hosting is decided (D2). The time budgets are targets measured by M11; a stage that runs over its budget is a process issue for Dane.
 
 1. Take an issue from the Ready column of the project board and assign yourself. Limit: 2 issues in progress per person.
 2. Branch from main as type/issue-short-name, for example feat/42-plant-search or fix/57-reservation-end-time.
@@ -454,15 +454,15 @@ The rule for the audit trail: if a decision is not in an issue, PR, ADR or meeti
 
 ## 6. Tools and Techniques
 
-Every tool below is configured by a file committed to the repository, so the checks travel with the code and a new team gets them by cloning. The Status column says what is true on October 23, 2026: "runs" means it ran and passed on the starter repository; "configured" means the file is committed but it needs the GitHub repository (D5) or a later decision before it can run.
+Every tool below is configured by a file committed to the repository, so the checks travel with the code and a new team gets them by cloning. The Status column says what is true on October 23, 2026: "runs" means it ran and passed on the starter repository; "configured" means the file is committed but waits on a setting or a later decision before it can run.
 
 ### 6.1 Tools in use
 
 | Purpose | Tool | Configuration committed at | Status | Owner |
 | --- | --- | --- | --- | --- |
-| Version control | Git; repository in a GitHub organization owned by the Biology department (D4) | .gitignore, .gitattributes, .editorconfig | Runs locally: first commit October 23, 2026; pushed to GitHub in D5 | Dane |
+| Version control | Git; repository in a GitHub organization owned by the Biology department (D4) | .gitignore, .gitattributes, .editorconfig | Runs: pushed October 23, 2026 to github.com/swheels-alt/siue-greenhouse-site (public, on Sam's account until D4 moves it to the department) | Dane |
 | Branch protection | GitHub ruleset on main (4.1) | .github/rulesets/main.json; steps in docs/REPO\_SETTINGS.md | Configured | Dane |
-| CI/CD | GitHub Actions | .github/workflows/ci.yml, protected-paths.yml, nightly.yml, mutation.yml, codeql.yml, deploy.yml | Configured; every workflow passes actionlint. deploy.yml is a placeholder until ADR 0002 | Dane |
+| CI/CD | GitHub Actions | .github/workflows/ci.yml, protected-paths.yml, nightly.yml, mutation.yml, codeql.yml, deploy.yml | Runs: the first CI run on October 23, 2026 passed every job (e2e skipped until E2E\_ENABLED is set); every workflow passes actionlint. deploy.yml is a placeholder until ADR 0002 | Dane |
 | Tasks and defects | GitHub Issues and a Projects board: Backlog, Ready, In progress, In review, Done | .github/ISSUE\_TEMPLATE/bug.yml, feature.yml; .github/labels.yml | Configured | Sam |
 | Code review | GitHub pull requests, CODEOWNERS, PR template | .github/CODEOWNERS, .github/pull\_request\_template.md | Configured; real usernames replace the placeholder handles in D5 | Sam |
 | Python lint, format, types, complexity | ruff, mypy, lizard | pyproject.toml, Makefile | Runs | Dane |
@@ -473,13 +473,13 @@ Every tool below is configured by a file committed to the repository, so the che
 | JavaScript lint and format | ESLint (react, react-hooks, jsx-a11y, jsdoc), Prettier, Stylelint | frontend/eslint.config.js, .prettierrc, .stylelintrc.json | Runs | Matthew |
 | JavaScript tests | Vitest with React Testing Library | frontend/vite.config.js | Runs | Matthew |
 | Browser and accessibility tests | Playwright, @axe-core/playwright, Lighthouse CI | e2e/playwright.config.js, lighthouserc.json | Configured; switched on with the first page template (E2E\_ENABLED). Lighthouse CI runs pinned through npx, outside the lockfile, because its own dependencies carry High advisories; the exception is in docs/qa/waivers.md, awaiting Sam's and Dane's approval | Matthew |
-| Secrets and dependencies | gitleaks, pip-audit, npm audit, Dependabot | .gitleaks.toml, .github/dependabot.yml | gitleaks, pip-audit and npm audit run; Dependabot needs D5 | Dane |
-| Code scanning | CodeQL | .github/workflows/codeql.yml | Configured to run only on a public repository. On a private repository it needs GitHub Code Security, a paid license, so it is optional, never a required check | Dane |
+| Secrets and dependencies | gitleaks, pip-audit, npm audit, Dependabot | .gitleaks.toml, .github/dependabot.yml | Runs; Dependabot opened its first 4 update PRs on October 23, and CI blocked the ESLint 10 one, as the debt register predicts | Dane |
+| Code scanning | CodeQL | .github/workflows/codeql.yml | Runs, because the repository is public (first scan October 23, 2026, passed). On a private repository it needs GitHub Code Security, a paid license, so it is never a required check | Dane |
 | Local hooks | pre-commit | .pre-commit-config.yaml | Runs; make setup installs the hooks inside a git repository | Dane |
 | Local environment | Docker Compose (MySQL 8.4) and make | docker-compose.yml, Makefile, .env.example | Runs (database only until ADR 0001 adds the API) | Dane |
 | Pinned versions | Python 3.12 or newer (CI uses .python-version; make setup refuses older), Node.js, MySQL, every package | .python-version, .nvmrc, docker-compose.yml, backend/requirements.lock, frontend/package-lock.json | Runs | Dane |
 | Documentation | Markdown with Mermaid diagrams; OpenAPI | docs/, docs/api/openapi.yaml | Runs (the spec is read by tests) | Yahir |
-| QA metrics | Report script using the GitHub CLI and local reports | scripts/qa\_report.py | Local metrics run; GitHub metrics need D5 | Sam |
+| QA metrics | Report script using the GitHub CLI and local reports | scripts/qa\_report.py | Local metrics run; GitHub metrics from the November report on | Sam |
 
 **Public or private repository.** We recommend a public repository in the department's organization, and Dane confirms it with ITS as part of D4. On GitHub's free plan, rulesets (our branch protection) are enforced only on public repositories, CodeQL runs free only on public repositories, and Actions minutes are free and unlimited for public repositories on standard runners. If the department needs the repository private, it needs a paid GitHub plan for the rulesets to apply, and CodeQL drops out (risk R12).
 
@@ -561,7 +561,7 @@ We do not collect lines of code written, commits per person, defects per person,
 
 ### 7.5 How the numbers are gathered
 
-scripts/qa\_report.py prints the monthly report. It computes M1 to M12 and PR size from the GitHub CLI (M3 and M5 from the revert and hotfix labels, M4 and M9 from CI and nightly runs on main), and reads coverage, maintainability index and the latest mutation results from local files. Its calculations have unit tests on sample GitHub CLI output written in the CLI's JSON format, but it cannot fetch live GitHub data until the repository exists (D5); until then those rows print n/a, as in the first report, docs/qa/reports/2026-10.md. M13 to M15 are CI checks. The manual accessibility check (M14) and the dry run (M16) need a person.
+scripts/qa\_report.py prints the monthly report. It computes M1 to M12 and PR size from the GitHub CLI (M3 and M5 from the revert and hotfix labels, M4 and M9 from CI and nightly runs on main), and reads coverage, maintainability index and the latest mutation results from local files. Its calculations have unit tests on sample GitHub CLI output written in the CLI's JSON format, but the first report, docs/qa/reports/2026-10.md, was run before the repository was pushed, so its GitHub rows read n/a; November's is the first with live GitHub data. M13 to M15 are CI checks. The manual accessibility check (M14) and the dry run (M16) need a person.
 
 ### 7.6 What happens when metrics fall below standard
 
@@ -581,7 +581,7 @@ Every QA record lives in the project repository or its GitHub organization, whic
 | Record | Where | Created | Retention |
 | --- | --- | --- | --- |
 | Code review log | PR conversations and approvals on GitHub | Every PR | Life of the repository; exported with the release archive (last row) |
-| Defect and task records | GitHub Issues; the first defects, logged before the repository was pushed, are in docs/qa/defects/ and become issues #1 and #2 in D5 | As reported | Life of the repository; exported as JSON at each release and handoff |
+| Defect and task records | GitHub Issues; the first two, logged before the repository was pushed, are also in docs/qa/defects/ | As reported | Life of the repository; exported as JSON at each release and handoff |
 | CI results | GitHub Actions logs and artifacts | Every run | 90 days (GitHub default); the numbers that matter are copied into the monthly report |
 | Metrics reports | docs/qa/reports/YYYY-MM.md | Monthly | Permanent |
 | Release test summaries | docs/qa/releases/vX.Y.Z.md and the GitHub Release | Each release | Permanent |
@@ -603,7 +603,7 @@ Every QA record lives in the project repository or its GitHub organization, whic
 | Release quality summary | Markdown from docs/qa/releases/TEMPLATE.md: version, tests run and passed, open defects by severity and priority, accessibility result, known issues, sign-off | Each release | Sponsor for acceptance; team | Sam |
 | Semester QA summary | Markdown and PDF | December 2026 and May 2027 | William Grim; sponsor | Sam, Yahir |
 
-The first monthly report was generated from the starter repository on October 23, 2026, and is committed as docs/qa/reports/2026-10.md. This excerpt shows its format; the GitHub rows read n/a because the repository is not pushed yet (D5):
+The first monthly report was generated from the starter repository on October 23, 2026, and is committed as docs/qa/reports/2026-10.md. This excerpt shows its format; the GitHub rows read n/a because it was run before the repository was pushed:
 
 ```markdown
 # QA report: 2026-10
@@ -754,11 +754,11 @@ The instructions count as working only after someone outside the team has follow
 - **Pass.** M16: make test passes within 30 minutes of git clone once prerequisites are installed, and within 2 hours including installing them, with no outside help.
 - **Fail.** Each stopping point becomes a docs issue, fixed before the next release, and the dry run is repeated with a different person.
 - **When.** Matthew's run by October 30, 2026 (D7); the outside student's by November 13, 2026; before any release that changes setup; and at handoff.
-- **Status on October 23, 2026.** Not yet run by anyone who did not write the docs, so this check is open (D7). Two weaker checks have run. The fresh-setup CI job is written to run the quick start on a clean runner on every PR. And the starter repository was unzipped into an empty folder, made a git repository, and make setup, make test, make lint and every pre-commit hook passed, on a machine that already had the prerequisites. Both show the commands work, not that a newcomer can follow them.
+- **Status on October 23, 2026.** Not yet run by anyone who did not write the docs, so this check is open (D7). Two weaker checks have run. The fresh-setup CI job ran the quick start on a clean GitHub runner on October 23, 2026, and passed. And the starter repository was unzipped into an empty folder, made a git repository, and make setup, make test, make lint and every pre-commit hook passed, on a machine that already had the prerequisites. Both show the commands work, not that a newcomer can follow them.
 
 ### 9.5 First task for a new developer
 
-The first task is a real, small, open issue that a newcomer can finish on day one, not an exercise. Today it is issue #3, **Home page: show greenhouse location and hours**: add a section to the home page that shows the greenhouse's address, a map link and opening hours from a content file, with a Vitest test, keyboard and screen-reader-friendly markup, and a CHANGELOG line, with the PR opened the same day. Its Given/When/Then acceptance criteria are in docs/qa/issues/0003-home-page-location-and-hours.md until D5 files it on GitHub. It touches the front end, the theme, tests and docs, and it is part of Q2's 3-click goal. The documentation owner keeps at least two issues labeled good first issue open at all times, sized for one day, so every new developer gets a real one.
+The first task is a real, small, open issue that a newcomer can finish on day one, not an exercise. Today it is issue #3, **Home page: show greenhouse location and hours**: add a section to the home page that shows the greenhouse's address, a map link and opening hours from a content file, with a Vitest test, keyboard and screen-reader-friendly markup, and a CHANGELOG line, with the PR opened the same day. It is filed on GitHub with Given/When/Then acceptance criteria (also in docs/qa/issues/0003-home-page-location-and-hours.md). It touches the front end, the theme, tests and docs, and it is part of Q2's 3-click goal. The documentation owner keeps at least two issues labeled good first issue open at all times, sized for one day, so every new developer gets a real one.
 
 ### 9.6 Training and recommended practices
 
@@ -888,7 +888,7 @@ Technical debt is a shortcut we took on purpose to ship sooner, which costs us a
 
 Every bug is filed through the issue form .github/ISSUE\_TEMPLATE/bug.yml, which requires: summary, environment (local, staging or production, plus version and browser), steps to reproduce, expected result and actual result. Screenshots are optional and must have personal data removed. Triage adds severity, priority, labels, assignee and milestone.
 
-The first two entries are real. They were found on October 23, 2026, before the repository was pushed, so they are kept in docs/qa/defects/ and become GitHub issues #1 and #2 in D5. The last is illustrative, to show the won't-fix path in 8.3, and is labeled as an example.
+The first two entries are real. They were found on October 23, 2026, before the repository was pushed; they are GitHub issues #1 and #2, with records in docs/qa/defects/. The last is illustrative, to show the won't-fix path in 8.3, and is labeled as an example.
 
 **Defect #1 (real): the route-access test could never fail**
 
@@ -960,7 +960,7 @@ The first two entries are real. They were found on October 23, 2026, before the 
 | D2 | Hosting: test server, production host, who runs and keeps backups (ADR 0002) | Dane, with ITS | Before the first deploy | Staging gate G4; deploy.yml; recovery plans in 11.3 |
 | D3 | SIUE sign-on protocol and test accounts (ADR 0003) | Dane, with ITS | Before any login feature is built | The development login; Q4 tests against real SSO |
 | D4 | GitHub organization owned by the Biology department, its two department owners, and public or private | Yahir, with Dr. Williams, Jordyn Grawe and the department webmaster; Dane confirms public with ITS | Before the first commit | Record retention (Section 8); rulesets and CodeQL (6.1) |
-| D5 | Push the starter repository to the organization; replace the placeholder handles in CODEOWNERS; set QA\_LEAD and QA\_LEAD\_BACKUP; apply .github/rulesets/main.json; file defects #1 and #2 and issue #3 | Dane | Before the first feature PR | Every automated gate |
+| D5 | Done October 23: repository pushed, labels created, issues #1 to #3 filed, first CI run green. Still to do: replace the placeholder handles in CODEOWNERS; set QA\_LEAD and QA\_LEAD\_BACKUP; apply .github/rulesets/main.json | Dane | Before the first feature PR | Every automated gate |
 | D6 | Which SIUE accessibility training module student developers take | Matthew, with the ACCESS Office | Before the first page ships | 9.6 |
 | D7 | First timed setup dry run by someone who did not write the docs (Matthew), then by an outside student | Yahir | Matthew by October 30, 2026; outside student by November 13, 2026 | M16, Q3 |
 | D8 | Confirm the 3 usability tasks in Q2 with Dr. Williams | Sam | Sponsor meeting on October 27, 2026 (Usability Testing Plan due October 30) | Q2 and the Usability Testing Plan |

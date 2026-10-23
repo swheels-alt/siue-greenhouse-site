@@ -13,6 +13,13 @@ updates:
       interval: weekly
       day: monday
     labels: ["dependencies"]
+    # ESLint stays on 9 until eslint-plugin-jsx-a11y supports 10 (docs/DEBT.md). CI failed the
+    # first ESLint 10 update on October 23, 2026, which is the gate doing its job.
+    ignore:
+      - dependency-name: "eslint"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@eslint/js"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: npm
     directory: /e2e
     schedule:
