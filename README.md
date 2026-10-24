@@ -18,7 +18,7 @@ Goal (QA plan Q3, M16): with the prerequisites installed, clone to passing `make
 30 minutes or less.
 
 ```bash
-git clone <repository URL from docs/HANDOFF.md> greenhouse-site
+git clone https://github.com/swheels-alt/siue-greenhouse-site.git greenhouse-site
 cd greenhouse-site
 cp .env.example .env     # local defaults work as-is
 make setup               # Python venv, Python and Node packages, pre-commit hooks
