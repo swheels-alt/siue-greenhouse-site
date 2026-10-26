@@ -6,6 +6,9 @@ All user-visible changes are listed here (Keep a Changelog format, Semantic Vers
 
 ### Added
 
+- Plant inventory page (prototype): search by common or scientific name and filter by type,
+  with a live result count; uses 13 labeled sample plants through `src/api/plants.js` until
+  `GET /api/v1/plants` exists (ADR 0001); "Browse plants" on the home page
 - #3: the home page shows the greenhouse location, a "Get directions" map link and the hours
   for each day, read from `frontend/src/content/visit.json` (placeholder values until greenhouse
   staff confirm them); site header with a skip link and main navigation; a not-found page

@@ -2,10 +2,14 @@ import { useEffect, useRef } from "react";
 import SiteHeader from "./components/SiteHeader.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
+import PlantsPage from "./pages/PlantsPage.jsx";
 import { useHashRoute } from "./routing.js";
 
 // Each page: its path, its name in the navigation and the browser tab, and its component.
-export const PAGES = [{ path: "/", label: "Home", Component: HomePage }];
+export const PAGES = [
+  { path: "/", label: "Home", Component: HomePage },
+  { path: "/plants", label: "Plants", Component: PlantsPage },
+];
 
 /**
  * The site: header, the page for the current path, and footer.
