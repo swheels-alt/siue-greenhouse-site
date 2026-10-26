@@ -9,7 +9,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 option(GREENHOUSE_COVERAGE "Build with gcov flags so gcovr can report coverage (reported only, QA plan 7.3)" OFF)
 
-add_library(greenhouse src/version.cpp)
+add_library(greenhouse src/version.cpp src/conflict.cpp)
 target_include_directories(greenhouse PUBLIC include)
 target_compile_options(greenhouse PRIVATE -Wall -Wextra -Wpedantic -Werror)
 
@@ -30,7 +30,7 @@ set(INSTALL_GTEST OFF CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 enable_testing()
-add_executable(greenhouse_tests tests/version_test.cpp)
+add_executable(greenhouse_tests tests/version_test.cpp tests/conflict_test.cpp)
 target_link_libraries(greenhouse_tests PRIVATE greenhouse GTest::gtest_main)
 include(GoogleTest)
 gtest_discover_tests(greenhouse_tests)
