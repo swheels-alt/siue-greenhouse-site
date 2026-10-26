@@ -1,18 +1,6 @@
 // Flow 1: find hours and location from the home page (QA plan 3.3, issue #3).
-import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
-
-/**
- * Run axe on the current page and return only the violations that block a merge (M14).
- * @param {import("@playwright/test").Page} page The page under test.
- * @returns {Promise<object[]>} Serious and critical WCAG 2.1 A and AA violations.
- */
-export async function blockingViolations(page) {
-  const results = await new AxeBuilder({ page })
-    .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
-    .analyze();
-  return results.violations.filter((v) => ["serious", "critical"].includes(v.impact));
-}
+import { blockingViolations } from "./axe.js";
 
 test("home page has the site heading", async ({ page }) => {
   await page.goto("/");

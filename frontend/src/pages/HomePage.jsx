@@ -14,6 +14,11 @@ export default function HomePage() {
           The Department of Biological Sciences greenhouse, used for teaching and research and open
           to students, faculty and the public.
         </p>
+        <p className="hero-actions">
+          <a className="button" href="#/plants">
+            Browse plants
+          </a>
+        </p>
       </div>
       <VisitSection visit={visit} />
     </>

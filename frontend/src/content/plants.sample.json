@@ -1,0 +1,79 @@
+{
+  "sample": true,
+  "sampleNote": "Sample plants for the prototype. The real inventory comes from greenhouse staff.",
+  "plants": [
+    {
+      "id": 1,
+      "commonName": "Venus flytrap",
+      "scientificName": "Dionaea muscipula",
+      "category": "Carnivorous"
+    },
+    {
+      "id": 2,
+      "commonName": "Purple pitcher plant",
+      "scientificName": "Sarracenia purpurea",
+      "category": "Carnivorous"
+    },
+    {
+      "id": 3,
+      "commonName": "Cape sundew",
+      "scientificName": "Drosera capensis",
+      "category": "Carnivorous"
+    },
+    {
+      "id": 4,
+      "commonName": "Coffee plant",
+      "scientificName": "Coffea arabica",
+      "category": "Tropical"
+    },
+    {
+      "id": 5,
+      "commonName": "Swiss cheese plant",
+      "scientificName": "Monstera deliciosa",
+      "category": "Tropical"
+    },
+    {
+      "id": 6,
+      "commonName": "Cacao tree",
+      "scientificName": "Theobroma cacao",
+      "category": "Tropical"
+    },
+    { "id": 7, "commonName": "Banana", "scientificName": "Musa acuminata", "category": "Tropical" },
+    {
+      "id": 8,
+      "commonName": "Aloe vera",
+      "scientificName": "Aloe vera",
+      "category": "Succulents and cacti"
+    },
+    {
+      "id": 9,
+      "commonName": "Jade plant",
+      "scientificName": "Crassula ovata",
+      "category": "Succulents and cacti"
+    },
+    {
+      "id": 10,
+      "commonName": "Old man cactus",
+      "scientificName": "Cephalocereus senilis",
+      "category": "Succulents and cacti"
+    },
+    {
+      "id": 11,
+      "commonName": "Thale cress",
+      "scientificName": "Arabidopsis thaliana",
+      "category": "Research plants"
+    },
+    {
+      "id": 12,
+      "commonName": "Benth's tobacco",
+      "scientificName": "Nicotiana benthamiana",
+      "category": "Research plants"
+    },
+    {
+      "id": 13,
+      "commonName": "Boston fern",
+      "scientificName": "Nephrolepis exaltata",
+      "category": "Ferns"
+    }
+  ]
+}
