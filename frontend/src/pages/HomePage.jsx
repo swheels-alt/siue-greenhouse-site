@@ -18,6 +18,9 @@ export default function HomePage() {
           <a className="button" href="#/plants">
             Browse plants
           </a>
+          <a className="button button-secondary" href="#/tour">
+            Request a tour
+          </a>
         </p>
       </div>
       <VisitSection visit={visit} />
