@@ -29,9 +29,32 @@ make run                 # API at http://localhost:8000, site at http://localhos
 make test                # Python, C++ and front-end tests; make e2e runs the browser flows
 ```
 
-Status on October 23, 2026: `setup`, `db-up`, `test` and `lint` work. `migrate`, `seed` and `run`
+Status on October 26, 2026: `setup`, `db-up`, `test` and `lint` work. `migrate`, `seed` and `run`
 print a notice until ADR 0001 picks the Python web framework (QA plan Appendix C, D1; tracked as
 defect #2 and in [docs/DEBT.md](docs/DEBT.md)).
+
+## Run the front-end prototype
+
+The fall prototype runs in the browser with no server or database:
+
+```bash
+cd frontend
+npm ci
+npm run dev              # http://localhost:5173
+```
+
+| Page | Address | What works | Not yet |
+| --- | --- | --- | --- |
+| Home | `#/` | Location, "Get directions" map link, hours for each day (#3) | Address and hours are placeholders until staff confirm them |
+| Plants | `#/plants` | Search by common or scientific name, filter by type | 13 sample plants; no staff editing until the API exists |
+| Request a tour | `#/tour` | Every field checked, plain-language errors, spam trap, confirmation | Nothing is sent: the tours API waits on ADR 0001 |
+
+Table reservations, SIUE sign-in and staff tools wait on ADR 0001 and ADR 0003 and are planned
+for Spring 2027. The C++ reservation conflict check is a tested library in `cpp/`, not yet wired
+to Python.
+
+Browser flows with axe accessibility checks: `make e2e` (builds the site and runs
+`e2e/tests/`).
 
 ## Where things are
 

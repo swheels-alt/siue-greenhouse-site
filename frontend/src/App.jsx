@@ -3,12 +3,14 @@ import SiteHeader from "./components/SiteHeader.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
 import PlantsPage from "./pages/PlantsPage.jsx";
+import TourPage from "./pages/TourPage.jsx";
 import { useHashRoute } from "./routing.js";
 
 // Each page: its path, its name in the navigation and the browser tab, and its component.
 export const PAGES = [
   { path: "/", label: "Home", Component: HomePage },
   { path: "/plants", label: "Plants", Component: PlantsPage },
+  { path: "/tour", label: "Request a tour", Component: TourPage },
 ];
 
 /**

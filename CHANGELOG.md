@@ -6,6 +6,10 @@ All user-visible changes are listed here (Keep a Changelog format, Semantic Vers
 
 ### Added
 
+- Request a tour page (prototype): public form with no login; every field checked in plain
+  language, an error summary linked to each field, a hidden spam trap, and a confirmation that
+  says the request was not sent; "Request a tour" on the home page; README section on running
+  the prototype
 - Plant inventory page (prototype): search by common or scientific name and filter by type,
   with a live result count; uses 13 labeled sample plants through `src/api/plants.js` until
   `GET /api/v1/plants` exists (ADR 0001); "Browse plants" on the home page
