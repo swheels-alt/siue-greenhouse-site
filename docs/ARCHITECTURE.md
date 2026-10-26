@@ -25,6 +25,16 @@ Rules: a module reaches another only through its service functions, never throug
 The front end reaches the server only through `/api/v1`, described in
 [api/openapi.yaml](api/openapi.yaml).
 
+## C++ conflict check
+
+`cpp/include/greenhouse/conflict.hpp` holds the reservation availability check proposed in
+ADR 0001: `CheckRequest` answers whether a requested time overlaps any approved reservation for
+the same space, and `OpenSlots` lists the free gaps in a window such as one day's hours. Times
+are half-open ranges in minutes since the Unix epoch (UTC), so a booking ending at 10:00 and one
+starting at 10:00 do not conflict. The library has no database, network or clock access and is
+tested on its own with GoogleTest. The Python binding is added when ADR 0001 is accepted; if
+C++ is ruled out, the same two functions are written in Python and `cpp/` is removed.
+
 ## Open decisions
 
 | ID | Decision | ADR |

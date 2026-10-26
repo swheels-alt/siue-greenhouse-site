@@ -6,6 +6,10 @@ All user-visible changes are listed here (Keep a Changelog format, Semantic Vers
 
 ### Added
 
+- C++ reservation conflict check (`cpp/include/greenhouse/conflict.hpp`): checks a requested
+  time against approved reservations (half-open ranges, so back-to-back bookings do not
+  conflict) and lists a day's open slots; 19 GoogleTest cases. Not yet called from Python
+  (ADR 0001 is still proposed)
 - Starter repository: CI gates, review rules, issue forms, QA plan and docs (October 23, 2026)
 - docs/DEFINITION_OF_DONE.md, docs/DEBT.md (technical debt register) and docs/ROTATION.md
   (reviewer of the week, build cop, module owners)
