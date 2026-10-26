@@ -6,6 +6,9 @@ All user-visible changes are listed here (Keep a Changelog format, Semantic Vers
 
 ### Added
 
+- #3: the home page shows the greenhouse location, a "Get directions" map link and the hours
+  for each day, read from `frontend/src/content/visit.json` (placeholder values until greenhouse
+  staff confirm them); site header with a skip link and main navigation; a not-found page
 - Starter repository: CI gates, review rules, issue forms, QA plan and docs (October 23, 2026)
 - docs/DEFINITION_OF_DONE.md, docs/DEBT.md (technical debt register) and docs/ROTATION.md
   (reviewer of the week, build cop, module owners)

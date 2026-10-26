@@ -1,0 +1,19 @@
+{
+  "placeholder": true,
+  "placeholderNote": "The address and hours below are placeholders until greenhouse staff confirm them.",
+  "addressLines": [
+    "SIUE Greenhouse, Department of Biological Sciences",
+    "Southern Illinois University Edwardsville",
+    "Edwardsville, IL 62026"
+  ],
+  "mapUrl": "https://www.google.com/maps/search/?api=1&query=Southern+Illinois+University+Edwardsville",
+  "hours": [
+    { "day": "Monday", "open": "08:00", "close": "16:30" },
+    { "day": "Tuesday", "open": "08:00", "close": "16:30" },
+    { "day": "Wednesday", "open": "08:00", "close": "16:30" },
+    { "day": "Thursday", "open": "08:00", "close": "16:30" },
+    { "day": "Friday", "open": "08:00", "close": "16:30" },
+    { "day": "Saturday", "closed": true },
+    { "day": "Sunday", "closed": true }
+  ]
+}

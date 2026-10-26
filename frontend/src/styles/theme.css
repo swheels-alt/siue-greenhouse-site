@@ -1,24 +1,27 @@
 /*
  * The only file allowed to hold color values (QA plan 3.1, Stylelint color-no-hex).
  * Placeholder values: Matthew replaces them with the SIUE brand colors and fonts
- * confirmed by Marketing and Communications.
+ * confirmed by Marketing and Communications. Every text and background pair below
+ * meets WCAG 2.1 AA contrast (4.5:1 for body text).
  */
 :root {
-  --color-text: #1a1a1a;
-  --color-background: #fff;
-  --color-accent: #8a1c1c;
-  --font-body: system-ui, sans-serif;
-}
-
-body {
-  margin: 0;
-  color: var(--color-text);
-  background: var(--color-background);
-  font-family: var(--font-body);
-}
-
-.page {
-  max-width: 60rem;
-  margin: 0 auto;
-  padding: 1.5rem 1rem;
+  --color-text: #17322b;
+  --color-text-muted: #4b5c54;
+  --color-background: #f7f5ee;
+  --color-surface: #fff;
+  --color-surface-alt: #e9efe6;
+  --color-border: #c9d5cc;
+  --color-accent: #b5122d;
+  --color-accent-text: #fff;
+  --color-brand: #2f6b45;
+  --color-brand-dark: #17322b;
+  --color-on-brand: #f7f5ee;
+  --color-on-brand-muted: #d3e2d8;
+  --color-notice-background: #fdf3d8;
+  --color-notice-border: #b27a00;
+  --color-error: #a0102a;
+  --color-focus: #1d4ed8;
+  --font-body: system-ui, -apple-system, "Segoe UI", roboto, sans-serif;
+  --font-display: georgia, "Times New Roman", serif;
+  --radius: 0.75rem;
 }
